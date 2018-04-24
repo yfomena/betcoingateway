@@ -1,0 +1,44 @@
+
+<div *ngIf="competition">
+    <h2><span>Competition</span> {{competition.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Competition Name</span></dt>
+        <dd>
+            <span>{{competition.competitionName}}</span>
+        </dd>
+        <dt><span>Winner</span></dt>
+        <dd>
+            <div *ngIf="competition.winner">
+                <a [routerLink]="['/team', competition.winner?.id]">{{competition.winner?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Second</span></dt>
+        <dd>
+            <div *ngIf="competition.second">
+                <a [routerLink]="['/team', competition.second?.id]">{{competition.second?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Third</span></dt>
+        <dd>
+            <div *ngIf="competition.third">
+                <a [routerLink]="['/team', competition.third?.id]">{{competition.third?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'competition/'+ competition.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

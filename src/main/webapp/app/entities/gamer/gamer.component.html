@@ -1,0 +1,76 @@
+<div>
+    <h2>
+        <span>Gamers</span>
+        <button class="btn btn-primary float-right jh-create-entity create-gamer" [routerLink]="['/', { outlets: { popup: ['gamer-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Gamer
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="gamers">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="pseudo"><span>Pseudo</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="email"><span>Email</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="points"><span>Points</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="lastConnexion"><span>Last Connexion</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="winningRun"><span>Winning Run</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="isAdmin"><span>Is Admin</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let gamer of gamers ;trackBy: trackId">
+                <td><a [routerLink]="['../gamer', gamer.id ]">{{gamer.id}}</a></td>
+                <td>{{gamer.pseudo}}</td>
+                <td>{{gamer.email}}</td>
+                <td>{{gamer.points}}</td>
+                <td>{{gamer.lastConnexion | date:'medium'}}</td>
+                <td>{{gamer.winningRun}}</td>
+                <td>{{gamer.isAdmin}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../gamer', gamer.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'gamer/'+ gamer.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'gamer/'+ gamer.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="gamers && gamers.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

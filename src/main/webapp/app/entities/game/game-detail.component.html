@@ -1,0 +1,52 @@
+
+<div *ngIf="game">
+    <h2><span>Game</span> {{game.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Match Date</span></dt>
+        <dd>
+            <span>{{game.matchDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Score Home</span></dt>
+        <dd>
+            <span>{{game.scoreHome}}</span>
+        </dd>
+        <dt><span>Score Away</span></dt>
+        <dd>
+            <span>{{game.scoreAway}}</span>
+        </dd>
+        <dt><span>Team 1</span></dt>
+        <dd>
+            <div *ngIf="game.team1">
+                <a [routerLink]="['/team', game.team1?.id]">{{game.team1?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Team 2</span></dt>
+        <dd>
+            <div *ngIf="game.team2">
+                <a [routerLink]="['/team', game.team2?.id]">{{game.team2?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Phase</span></dt>
+        <dd>
+            <div *ngIf="game.phase">
+                <a [routerLink]="['/phase', game.phase?.id]">{{game.phase?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'game/'+ game.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

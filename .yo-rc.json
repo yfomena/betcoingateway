@@ -1,7 +1,8 @@
 {
   "generator-jhipster": {
     "promptValues": {
-      "packageName": "com.betcoin.backend"
+      "packageName": "com.betcoin.backend",
+      "microservicePath": "../betcoinapi"
     },
     "jhipsterVersion": "4.14.3",
     "baseName": "betcoingateway",

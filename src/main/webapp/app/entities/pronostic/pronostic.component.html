@@ -1,0 +1,92 @@
+<div>
+    <h2>
+        <span>Pronostics</span>
+        <button class="btn btn-primary float-right jh-create-entity create-pronostic" [routerLink]="['/', { outlets: { popup: ['pronostic-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Pronostic
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="pronostics">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="pronoDate"><span>Prono Date</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="matchOrGroupOrcompetId"><span>Match Or Group Orcompet Id</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="scoreHome"><span>Score Home</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="scoreAway"><span>Score Away</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="winner"><span>Winner</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="gamer.id"><span>Gamer</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="pronotype.id"><span>Pronotype</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="pronostatus.id"><span>Pronostatus</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let pronostic of pronostics ;trackBy: trackId">
+                <td><a [routerLink]="['../pronostic', pronostic.id ]">{{pronostic.id}}</a></td>
+                <td>{{pronostic.pronoDate | date:'medium'}}</td>
+                <td>{{pronostic.matchOrGroupOrcompetId}}</td>
+                <td>{{pronostic.scoreHome}}</td>
+                <td>{{pronostic.scoreAway}}</td>
+                <td>{{pronostic.winner}}</td>
+                <td>
+                    <div *ngIf="pronostic.gamer">
+                        <a [routerLink]="['../gamer', pronostic.gamer?.id ]" >{{pronostic.gamer?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="pronostic.pronotype">
+                        <a [routerLink]="['../pronotype', pronostic.pronotype?.id ]" >{{pronostic.pronotype?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="pronostic.pronostatus">
+                        <a [routerLink]="['../pronostatus', pronostic.pronostatus?.id ]" >{{pronostic.pronostatus?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../pronostic', pronostic.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'pronostic/'+ pronostic.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'pronostic/'+ pronostic.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="pronostics && pronostics.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

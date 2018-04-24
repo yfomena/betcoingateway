@@ -1,0 +1,60 @@
+
+<div *ngIf="pronostic">
+    <h2><span>Pronostic</span> {{pronostic.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Prono Date</span></dt>
+        <dd>
+            <span>{{pronostic.pronoDate | date:'medium'}}</span>
+        </dd>
+        <dt><span>Match Or Group Orcompet Id</span></dt>
+        <dd>
+            <span>{{pronostic.matchOrGroupOrcompetId}}</span>
+        </dd>
+        <dt><span>Score Home</span></dt>
+        <dd>
+            <span>{{pronostic.scoreHome}}</span>
+        </dd>
+        <dt><span>Score Away</span></dt>
+        <dd>
+            <span>{{pronostic.scoreAway}}</span>
+        </dd>
+        <dt><span>Winner</span></dt>
+        <dd>
+            <span>{{pronostic.winner}}</span>
+        </dd>
+        <dt><span>Gamer</span></dt>
+        <dd>
+            <div *ngIf="pronostic.gamer">
+                <a [routerLink]="['/gamer', pronostic.gamer?.id]">{{pronostic.gamer?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Pronotype</span></dt>
+        <dd>
+            <div *ngIf="pronostic.pronotype">
+                <a [routerLink]="['/pronotype', pronostic.pronotype?.id]">{{pronostic.pronotype?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Pronostatus</span></dt>
+        <dd>
+            <div *ngIf="pronostic.pronostatus">
+                <a [routerLink]="['/pronostatus', pronostic.pronostatus?.id]">{{pronostic.pronostatus?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'pronostic/'+ pronostic.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

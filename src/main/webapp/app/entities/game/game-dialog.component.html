@@ -1,0 +1,63 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myGameLabel">Create or edit a Game</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!game.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="game.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_matchDate">Match Date</label>
+            <div class="d-flex">
+                <input id="field_matchDate" type="datetime-local" class="form-control" name="matchDate" [(ngModel)]="game.matchDate"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_scoreHome">Score Home</label>
+            <input type="number" class="form-control" name="scoreHome" id="field_scoreHome"
+                [(ngModel)]="game.scoreHome" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_scoreAway">Score Away</label>
+            <input type="number" class="form-control" name="scoreAway" id="field_scoreAway"
+                [(ngModel)]="game.scoreAway" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" for="field_team1">Team 1</label>
+            <select class="form-control" id="field_team1" name="team1" [(ngModel)]="game.team1" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="teamOption.id === game.team1?.id ? game.team1 : teamOption" *ngFor="let teamOption of teams; trackBy: trackTeamById">{{teamOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_team2">Team 2</label>
+            <select class="form-control" id="field_team2" name="team2" [(ngModel)]="game.team2" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="teamOption.id === game.team2?.id ? game.team2 : teamOption" *ngFor="let teamOption of teams; trackBy: trackTeamById">{{teamOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_phase">Phase</label>
+            <select class="form-control" id="field_phase" name="phase" [(ngModel)]="game.phase" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="phaseOption.id === game.phase?.id ? game.phase : phaseOption" *ngFor="let phaseOption of phases; trackBy: trackPhaseById">{{phaseOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

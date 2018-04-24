@@ -1,0 +1,73 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myPronosticLabel">Create or edit a Pronostic</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!pronostic.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="pronostic.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_pronoDate">Prono Date</label>
+            <div class="d-flex">
+                <input id="field_pronoDate" type="datetime-local" class="form-control" name="pronoDate" [(ngModel)]="pronostic.pronoDate"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_matchOrGroupOrcompetId">Match Or Group Orcompet Id</label>
+            <input type="number" class="form-control" name="matchOrGroupOrcompetId" id="field_matchOrGroupOrcompetId"
+                [(ngModel)]="pronostic.matchOrGroupOrcompetId" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_scoreHome">Score Home</label>
+            <input type="number" class="form-control" name="scoreHome" id="field_scoreHome"
+                [(ngModel)]="pronostic.scoreHome" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_scoreAway">Score Away</label>
+            <input type="number" class="form-control" name="scoreAway" id="field_scoreAway"
+                [(ngModel)]="pronostic.scoreAway" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_winner">Winner</label>
+            <input type="number" class="form-control" name="winner" id="field_winner"
+                [(ngModel)]="pronostic.winner" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" for="field_gamer">Gamer</label>
+            <select class="form-control" id="field_gamer" name="gamer" [(ngModel)]="pronostic.gamer" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="gamerOption.id === pronostic.gamer?.id ? pronostic.gamer : gamerOption" *ngFor="let gamerOption of gamers; trackBy: trackGamerById">{{gamerOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_pronotype">Pronotype</label>
+            <select class="form-control" id="field_pronotype" name="pronotype" [(ngModel)]="pronostic.pronotype" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="pronotypeOption.id === pronostic.pronotype?.id ? pronostic.pronotype : pronotypeOption" *ngFor="let pronotypeOption of pronotypes; trackBy: trackPronotypeById">{{pronotypeOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_pronostatus">Pronostatus</label>
+            <select class="form-control" id="field_pronostatus" name="pronostatus" [(ngModel)]="pronostic.pronostatus" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="pronostatusOption.id === pronostic.pronostatus?.id ? pronostic.pronostatus : pronostatusOption" *ngFor="let pronostatusOption of pronostatuses; trackBy: trackPronostatusById">{{pronostatusOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>
